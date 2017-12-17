@@ -12,6 +12,8 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import io.fotoapparat.Fotoapparat;
 import io.fotoapparat.FotoapparatSwitcher;
@@ -165,8 +167,7 @@ public class CamLauncher extends AppCompatActivity {
         cameraView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                takePicture(in);
-                in++;
+                takePicture();
             }
         });
     }
@@ -210,12 +211,22 @@ public class CamLauncher extends AppCompatActivity {
                 .build();
     }
 
-    private void takePicture(int i) {
+    private String createImageName(){
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_.jpg";
+
+        return imageFileName;
+    }
+
+    private void takePicture() {
         PhotoResult photoResult = fotoapparatSwitcher.getCurrentFotoapparat().takePicture();
-        String root = Environment.getExternalStorageDirectory() + File.separator + "Makeıtloooow";
-        File file = new File(root);
+
+        String storageDir = Environment.getExternalStorageDirectory() + File.separator + "Categorize" ;
+
+        File file = new File(storageDir);
         file.mkdirs();
-        file = new File(root, "java" + i + ".jpg");
+        file = new File(storageDir, createImageName());
 
         photoResult.saveToFile(file);
 
@@ -224,7 +235,7 @@ public class CamLauncher extends AppCompatActivity {
                 .whenAvailable(new PendingResult.Callback<BitmapPhoto>() {
                     @Override
                     public void onResult(BitmapPhoto result) {
-                        ImageView imageView = findViewById(R.id.result);
+                        ImageView imageView = (ImageView) findViewById(R.id.result);
 
                         imageView.setImageBitmap(result.bitmap);
                         imageView.setRotation(-result.rotationDegrees);

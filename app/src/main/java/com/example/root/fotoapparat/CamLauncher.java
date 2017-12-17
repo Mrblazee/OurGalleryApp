@@ -1,5 +1,7 @@
 package com.example.root.fotoapparat;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -211,6 +213,14 @@ public class CamLauncher extends AppCompatActivity {
                 .build();
     }
 
+    private void scanMedia(File file) {
+
+        Uri uri = Uri.fromFile(file);
+        Intent scanFileIntent = new Intent(
+                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
+        sendBroadcast(scanFileIntent);
+    }
+
     private String createImageName(){
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -230,12 +240,14 @@ public class CamLauncher extends AppCompatActivity {
 
         photoResult.saveToFile(file);
 
+        scanMedia(file);
+
         photoResult
                 .toBitmap(scaled(0.25f))
                 .whenAvailable(new PendingResult.Callback<BitmapPhoto>() {
                     @Override
                     public void onResult(BitmapPhoto result) {
-                        ImageView imageView = (ImageView) findViewById(R.id.result);
+                        ImageView imageView = findViewById(R.id.result);
 
                         imageView.setImageBitmap(result.bitmap);
                         imageView.setRotation(-result.rotationDegrees);

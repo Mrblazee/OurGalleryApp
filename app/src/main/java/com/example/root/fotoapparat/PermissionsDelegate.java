@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
+//MERHABA HALİBOOOOO
 class PermissionsDelegate {
 
     private static final int REQUEST_CODE = 10;

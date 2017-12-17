@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FotoApparat</string>
+    <string name="button">Tıkla</string>
+    <string name="no_camera_permission_granted">No Camera permission granted.</string>
+</resources>

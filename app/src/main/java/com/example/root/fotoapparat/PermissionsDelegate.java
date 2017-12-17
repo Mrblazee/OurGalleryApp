@@ -10,7 +10,7 @@ import android.view.View;
 class PermissionsDelegate {
 
     private static final int REQUEST_CODE = 10;
-    private static final int REQUEST_CODE2 = 11;
+   
     private final Activity activity;
 
     PermissionsDelegate(Activity activity) {

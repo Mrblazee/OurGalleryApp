@@ -16,10 +16,37 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void denebeni(View view) {
-        Intent neeeeee = new Intent(getApplicationContext(), CamLauncher.class);
-        startActivity(neeeeee);
+    public void openCamera(View view) {
+        Intent cam = new Intent(getApplicationContext(), CamLauncher.class);
+        startActivity(cam);
     }
 
 
+    /*private void listAlbums()
+    {
+        String storageDir = Environment.getExternalStorageDirectory() + File.separator + "Categorize";
+        File dir = new File(storageDir);
+
+        if (dir.exists()) {
+            File[] files = dir.listFiles();
+
+            File[] subfiles;
+
+            for (int i = 0; i < files.length; ++i) {
+                File file = files[i];
+
+                if (file.isDirectory()) {
+                    //traverse(file);
+                }
+            }
+        }
+
+    }*/
+
 }
+
+/*if (file.isDirectory()) {
+                    traverse(file);
+                } else {
+                    // do something here with the file
+                }*/

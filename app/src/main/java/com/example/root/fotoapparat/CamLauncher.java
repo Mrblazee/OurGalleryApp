@@ -169,6 +169,7 @@ public class CamLauncher extends AppCompatActivity {
         cameraView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 takePicture();
             }
         });
@@ -213,9 +214,11 @@ public class CamLauncher extends AppCompatActivity {
                 .build();
     }
 
-    private void scanMedia(File file) {
+    private void scanMedia(Uri uri) {
 
-        Uri uri = Uri.fromFile(file);
+        //File file = new File(imagePath);
+
+        //
         Intent scanFileIntent = new Intent(
                 Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
         sendBroadcast(scanFileIntent);
@@ -238,9 +241,18 @@ public class CamLauncher extends AppCompatActivity {
         file.mkdirs();
         file = new File(storageDir, createImageName());
 
-        photoResult.saveToFile(file);
+        final Uri uri = Uri.fromFile(file);
 
-        scanMedia(file);
+        //Toast.makeText(this, imagePath, Toast.LENGTH_SHORT).show();
+
+        photoResult.saveToFile(file).whenAvailable(new PendingResult.Callback<Void>() {
+            @Override
+            public void onResult(Void result) {
+                scanMedia(uri);
+            }
+        });
+
+
 
         photoResult
                 .toBitmap(scaled(0.25f))
@@ -298,4 +310,5 @@ public class CamLauncher extends AppCompatActivity {
         }
 
     }
+
 }
